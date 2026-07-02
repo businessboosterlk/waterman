@@ -25,7 +25,8 @@
   --disp:'Sora',-apple-system,system-ui,sans-serif;
   --sans:'Inter',-apple-system,system-ui,sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
-  --grad:linear-gradient(120deg,var(--blue),var(--aqua));
+  --grad:linear-gradient(120deg,var(--blue),var(--aqua) 55%,var(--green));
+  --grad-g:linear-gradient(120deg,var(--aqua),var(--green));
 }
 *{margin:0;padding:0;box-sizing:border-box}
 svg{flex-shrink:0}
@@ -40,7 +41,7 @@ input,select{font-family:inherit}
 h1,h2,h3,h4{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spacing:-.02em}
 .tnum{font-variant-numeric:tabular-nums}
 .eyebrow{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:11px}
-.eyebrow::before{content:"";width:26px;height:2px;background:var(--aqua);border-radius:2px}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--grad-g);border-radius:2px}
 .eyebrow.center{justify-content:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:600;font-size:14px;letter-spacing:.01em;padding:15px 28px;border-radius:100px;transition:.28s var(--ease);white-space:nowrap}
 .btn svg{width:17px;height:17px}
@@ -85,7 +86,15 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spac
 .orb2{width:420px;height:420px;background:radial-gradient(circle,var(--green),transparent 70%);bottom:40px;left:-100px;opacity:.32;animation:float2 20s var(--ease) infinite}
 @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-40px,40px)}}
 @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-30px)}}
-.hero-grid{position:relative;z-index:5;display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;width:100%;padding:40px 0 120px}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-ov{position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,rgba(7,20,38,.9) 0%,rgba(7,20,38,.72) 42%,rgba(7,24,46,.42) 100%),linear-gradient(0deg,rgba(7,20,38,.55),transparent 40%)}
+.hero.has-bg .hero-orb{z-index:2;opacity:.5}
+.hero-grid{position:relative;z-index:5;display:grid;grid-template-columns:1fr;gap:0;align-items:center;width:100%;max-width:820px;padding:40px 0 120px}
+.hero-bar{display:inline-flex;margin-top:38px;background:rgba(9,26,48,.42);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:15px 6px}
+.hero-bar .hvb{padding:2px 26px;position:relative;text-align:center}
+.hero-bar .hvb+.hvb::before{content:"";position:absolute;left:0;top:10%;height:80%;width:1px;background:rgba(255,255,255,.18)}
+.hero-bar .hvb b{display:block;font-family:var(--disp);font-weight:700;font-size:28px;line-height:1;letter-spacing:-.02em;background:linear-gradient(120deg,var(--aqua-2),var(--green-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-bar .hvb span{display:block;margin-top:6px;font:600 10.5px var(--sans);letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.72)}
 .hero .eyebrow{color:var(--aqua-2)}.hero .eyebrow::before{background:var(--aqua-2)}
 .hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:800;line-height:1.04;margin:22px 0 0;letter-spacing:-.03em}
 .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -93,7 +102,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spac
 .hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
 .hero-chips{display:flex;gap:10px;margin-top:34px;flex-wrap:wrap}
 .hero-chips span{font-size:12.5px;font-weight:500;color:rgba(255,255,255,.9);border:1px solid var(--line-d);padding:9px 15px;border-radius:100px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05)}
-.hero-chips svg{width:15px;height:15px;color:var(--aqua-2)}
+.hero-chips svg{width:15px;height:15px;color:var(--green-2)}
 /* hero visual: layered water card */
 .hero-vis{position:relative;height:440px;border-radius:var(--r-lg);overflow:hidden;background:linear-gradient(160deg,#0e3357,#0a2440);border:1px solid var(--line-d);box-shadow:0 40px 80px rgba(0,0,0,.4)}
 .hero-vis .ring{position:absolute;border:1.5px solid rgba(47,208,221,.3);border-radius:50%}
@@ -124,6 +133,8 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spac
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .why-c{text-align:left}
 .why-c .ic{width:54px;height:54px;border-radius:15px;background:var(--aqua-soft);color:var(--blue);display:grid;place-items:center;margin-bottom:18px}
+.why-c:nth-child(2) .ic,.why-c:nth-child(4) .ic{background:var(--green-soft);color:var(--green)}
+.why-c .num{color:var(--green)}
 .why-c .ic svg{width:27px;height:27px}
 .why-c h4{font-size:17px;margin-bottom:9px;letter-spacing:-.02em}
 .why-c p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
@@ -161,7 +172,7 @@ h1,h2,h3,h4{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spac
 .about-text p{color:var(--ink-2);font-size:16px;line-height:1.8;margin-bottom:18px;max-width:520px}
 .about-points{list-style:none;margin-top:26px;display:grid;gap:14px}
 .about-points li{display:flex;gap:13px;align-items:flex-start;font-size:15px;color:var(--ink)}
-.about-points .ic{width:30px;height:30px;border-radius:9px;background:var(--aqua-soft);color:var(--blue);display:grid;place-items:center;flex-shrink:0}
+.about-points .ic{width:30px;height:30px;border-radius:9px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;flex-shrink:0}
 .about-points svg{width:17px;height:17px}
 
 /* services grid */
@@ -279,7 +290,8 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
 .fab a{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;box-shadow:0 10px 26px rgba(10,36,64,.3);transition:.25s}
 .fab a:hover{transform:scale(1.08)}
 .fab .call{background:var(--grad);color:#fff}
-.fab a svg{width:24px;height:24px}
+.fab .wa{background:#25d366;color:#fff}
+.fab a svg{width:26px;height:26px}
 
 /* mobile menu */
 .mscrim{position:fixed;inset:0;background:rgba(6,24,46,.55);backdrop-filter:blur(3px);z-index:540;opacity:0;visibility:hidden;transition:.3s}
@@ -362,7 +374,13 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
 .hero-vis.hasphoto .pv-scrim{background:linear-gradient(150deg,rgba(7,24,46,.55),rgba(7,24,46,.15) 42%,rgba(7,24,46,.82))}
 .about-visual.hasphoto .pv-scrim{background:linear-gradient(155deg,rgba(7,24,46,.68),rgba(7,24,46,.42) 55%,rgba(7,24,46,.78))}
 .lab-visual.hasphoto .pv-scrim{background:linear-gradient(155deg,rgba(7,24,46,.34),rgba(7,24,46,.06) 45%,rgba(7,24,46,.5))}
-.hasphoto .hv-drop,.hasphoto .hv-water,.hasphoto .ring,.lab-visual.hasphoto svg.flask,.lab-visual.hasphoto .bubble{display:none}
+.hasphoto .hv-drop,.hasphoto .hv-water,.hasphoto .ring,.hasphoto .hv-grid,.lab-visual.hasphoto svg.flask,.lab-visual.hasphoto .bubble{display:none}
+/* hero glass stat bar */
+.hv-bar{position:absolute;z-index:4;left:16px;right:16px;bottom:16px;display:flex;background:rgba(9,26,48,.5);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px 8px}
+.hv-bar .hvb{flex:1;text-align:center;position:relative;padding:2px 4px}
+.hv-bar .hvb+.hvb::before{content:"";position:absolute;left:0;top:12%;height:76%;width:1px;background:linear-gradient(rgba(255,255,255,.04),rgba(255,255,255,.22),rgba(255,255,255,.04))}
+.hv-bar .hvb b{display:block;font-family:var(--disp);font-weight:700;font-size:26px;line-height:1;letter-spacing:-.02em;background:linear-gradient(120deg,var(--aqua-2),var(--green-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hv-bar .hvb span{display:block;margin-top:5px;font:600 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
 .pv-chip{position:absolute;z-index:3;left:20px;bottom:20px;display:flex;align-items:center;gap:9px;padding:11px 16px;border-radius:14px;background:rgba(7,24,46,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);color:#fff;font:600 13px var(--sans)}
 .pv-chip svg{width:18px;height:18px;color:var(--aqua-2)}
 /* full-width install showcase band */
@@ -410,7 +428,9 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
 </header>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero has-bg">
+  <img class="hero-bg" src="assets/cta.jpg" alt="Clean, pure water" loading="eager">
+  <div class="hero-ov"></div>
   <div class="hero-orb orb1"></div><div class="hero-orb orb2"></div>
   <div class="wrap hero-grid">
     <div class="hero-text">
@@ -426,20 +446,11 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>Design to maintenance</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>USA · Germany · Japan partners</span>
       </div>
-    </div>
-    <div class="hero-vis watermesh hasphoto" data-rv style="transition-delay:.2s">
-      <img class="pv-img" src="assets/hero.jpg" alt="Waterman reverse-osmosis treatment plant" loading="eager">
-      <div class="pv-scrim"></div>
-      <div class="hv-grid"></div>
-      <div class="ring" style="width:300px;height:300px;top:34px;left:-30px"></div>
-      <div class="hv-drop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2s7 7.6 7 12a7 7 0 0 1-14 0C5 9.6 12 2 12 2z"/><path d="M9 14a3 3 0 0 0 3 3" stroke-width="1.4"/></svg></div>
-      <div class="hv-water">
-        <svg class="w-move3" viewBox="0 0 1440 150" preserveAspectRatio="none"><path fill="rgba(47,208,221,.16)" d="M0,60 C240,110 480,20 720,54 C960,88 1200,24 1440,60 L1440,150 L0,150Z M1440,60 C1680,110 1920,20 2160,54 C2400,88 2640,24 2880,60 L2880,150 L1440,150Z"/></svg>
-        <svg class="w-move1" viewBox="0 0 1440 150" preserveAspectRatio="none" style="position:absolute;bottom:0"><path fill="rgba(10,111,184,.28)" d="M0,86 C240,50 480,120 720,90 C960,60 1200,116 1440,84 L1440,150 L0,150Z M1440,86 C1680,50 1920,120 2160,90 C2400,60 2640,116 2880,84 L2880,150 L1440,150Z"/></svg>
+      <div class="hero-bar" data-rv style="transition-delay:.4s">
+        <div class="hvb"><b>1990</b><span>Since</span></div>
+        <div class="hvb"><b data-count="35" data-suffix="+">0</b><span>Years</span></div>
+        <div class="hvb"><b data-count="30" data-suffix="+">0</b><span>Engineers &amp; chemists</span></div>
       </div>
-      <div class="hv-stat hv-s1"><div class="n" data-count="35" data-suffix="+">0</div><div class="t">Years of expertise</div></div>
-      <div class="hv-stat hv-s2"><div class="n" data-count="30" data-suffix="+">0</div><div class="t">Engineers &amp; chemists</div></div>
-      <div class="hv-cap">Design · Supply · Install · Maintain</div>
     </div>
   </div>
   <div class="hero-waves">
@@ -593,15 +604,6 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
   </div>
 </section>
 
-<!-- PARTNERS -->
-<section class="sect partners">
-  <div class="wrap sect-head" style="margin-bottom:26px">
-    <span class="eyebrow center" data-rv>Global equipment partners</span>
-    <h2 data-rv style="transition-delay:.08s">World-class technology, delivered locally</h2>
-  </div>
-  <div class="wrap cty" data-rv><span>USA</span><span>·</span><span>Germany</span><span>·</span><span>France</span><span>·</span><span>Japan</span><span>·</span><span>India</span></div>
-</section>
-
 <!-- INSTALL SHOWCASE BAND -->
 <section class="showband">
   <img src="assets/install.jpg" alt="Waterman engineers installing a water treatment system" loading="lazy">
@@ -613,9 +615,18 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
   </div>
 </section>
 
+<!-- PARTNERS -->
+<section class="sect partners">
+  <div class="wrap sect-head" style="margin-bottom:26px">
+    <span class="eyebrow center" data-rv>Global equipment partners</span>
+    <h2 data-rv style="transition-delay:.08s">World-class technology, delivered locally</h2>
+  </div>
+  <div class="wrap cty" data-rv><span>USA</span><span>·</span><span>Germany</span><span>·</span><span>France</span><span>·</span><span>Japan</span><span>·</span><span>India</span></div>
+</section>
+
 <!-- CTA -->
 <section class="cta" id="contact">
-  <img class="cta-photo" src="assets/cta.jpg" alt="Clean water droplet" loading="lazy">
+  <img class="cta-photo" src="assets/hero.jpg" alt="Waterman water treatment plant" loading="lazy">
   <div class="cta-scrim"></div>
   <div class="orb"></div>
   <div class="wrap cta-in">
@@ -650,7 +661,7 @@ footer{background:var(--navy-2);color:rgba(255,255,255,.62);padding:72px 0 30px}
 </footer>
 
 <div class="fab">
-  <a class="call" href="tel:+94114878838" aria-label="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16.5v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 3.2 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L9.1 9.9a16 16 0 0 0 6 6l1.3-1.35a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+  <a class="wa" href="https://wa.me/94114878838" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.07L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.2a8.19 8.19 0 0 1-4.18-1.14l-.3-.18-3 .79.8-2.92-.2-.31A8.2 8.2 0 1 1 12 20.2zm4.5-6.14c-.25-.12-1.47-.72-1.7-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.38-1.73-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.16 1.73 2.64 4.19 3.7.59.26 1.04.41 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg></a>
 </div>
 
 <!-- MOBILE MENU -->
@@ -799,9 +810,10 @@ window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(onScrol
 
 /* count-up */
 function countUp(el){
-  const target=+el.dataset.count,suf=el.dataset.suffix||'';let start=0;const dur=1400,t0=performance.now();
+  const target=+el.dataset.count,suf=el.dataset.suffix||'';const dur=1400,t0=performance.now();
   function step(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target)+suf;if(p<1)requestAnimationFrame(step);}
   requestAnimationFrame(step);
+  setTimeout(()=>{el.textContent=target+suf;},dur+400);
 }
 
 /* reveal + observers */

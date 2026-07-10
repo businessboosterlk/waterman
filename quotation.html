@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quotation - Waterman Environmental Systems</title>
+<style>
+  :root{
+    --navy:#0b2a45;
+    --aqua:#1f9dd6;
+    --green:#2fa66a;
+    --ink:#1a2733;
+    --muted:#5f7285;
+    --line:#e3e9ef;
+    --bg:#f4f7fa;
+    --paper:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    padding:32px 16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:820px;
+    margin:0 auto;
+    background:var(--paper);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 18px 50px rgba(11,42,69,.12);
+  }
+
+  /* Header */
+  .head{
+    background:linear-gradient(135deg,var(--navy),#0f3a5f);
+    color:#fff;
+    padding:18px 42px 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+  }
+  .brand-logo{height:44px;width:auto;display:block;margin-bottom:2px;}
+  .brand-name{font-size:22px;font-weight:800;letter-spacing:.3px;}
+  .brand-tag{font-size:12px;color:#a9c6dc;margin-top:4px;letter-spacing:.4px;text-transform:uppercase;}
+  .brand-meta{font-size:12.5px;color:#cfe0ee;margin-top:14px;line-height:1.7;}
+  .doc-badge{text-align:right;}
+  .doc-badge h1{font-size:30px;font-weight:800;letter-spacing:3px;}
+  .doc-badge .accent{width:56px;height:4px;background:var(--aqua);border-radius:2px;margin:8px 0 12px auto;}
+  .doc-badge .row{font-size:12.5px;color:#cfe0ee;}
+  .doc-badge .row b{color:#fff;}
+
+  /* Meta band */
+  .meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    padding:13px 42px;
+    border-bottom:1px solid var(--line);
+  }
+  .meta h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--aqua);margin-bottom:8px;}
+  .meta .client-name{font-size:16px;font-weight:700;color:var(--navy);}
+  .meta p{font-size:13px;color:var(--muted);line-height:1.55;}
+
+  /* Table */
+  .body{padding:8px 42px 0;}
+  table{width:100%;border-collapse:collapse;margin-top:14px;}
+  thead th{
+    background:var(--navy);
+    color:#fff;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+    text-align:left;
+    padding:12px 14px;
+  }
+  thead th.num{text-align:right;}
+  tbody td{
+    padding:8px 14px;
+    border-bottom:1px solid var(--line);
+    font-size:13.5px;
+    vertical-align:top;
+  }
+  tbody td.num{text-align:right;white-space:nowrap;}
+  tbody .item-title{font-weight:700;color:var(--navy);}
+  tbody .item-desc{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .was{color:#98a7b5;text-decoration:line-through;font-size:12.5px;}
+  .free{color:var(--green);font-weight:800;letter-spacing:.5px;font-size:13px;}
+
+  /* Summary band: What's included (left) + totals (right) */
+  .summary{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;padding:18px 0 4px;}
+  .incl-col{flex:1.25;}
+  .incl-col h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:12px;}
+  .incl-col .incl{gap:9px 22px;}
+
+  /* Totals */
+  .totals{display:flex;justify-content:flex-end;padding:0;flex-shrink:0;}
+  .totals table{width:300px;margin:0;}
+  .totals td{padding:8px 14px;border:none;font-size:13.5px;}
+  .totals .lbl{color:var(--muted);}
+  .totals .val{text-align:right;font-weight:600;white-space:nowrap;}
+  .totals .grand td{padding-top:12px;padding-bottom:12px;}
+  .totals .grand td{
+    background:linear-gradient(135deg,var(--navy),#0f3a5f);
+    color:#fff;
+    font-size:16px;
+    font-weight:800;
+    border-radius:8px;
+  }
+  .totals .grand .val{color:#fff;}
+
+  /* Scope / notes */
+  .section{padding:11px 42px;}
+  .section + .section{border-top:1px solid var(--line);}
+  .section h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--navy);margin-bottom:10px;}
+  .incl{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:7px 26px;}
+  .incl li{font-size:13px;color:var(--ink);padding-left:24px;position:relative;}
+  .incl li::before{
+    content:"";position:absolute;left:0;top:6px;width:14px;height:14px;
+    border-radius:50%;background:var(--green);
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z'/></svg>");
+    background-size:11px;background-repeat:no-repeat;background-position:center;
+  }
+  .terms{font-size:13px;color:var(--muted);line-height:1.6;}
+  .terms b{color:var(--navy);}
+
+  /* Sign-off */
+  .signoff{
+    display:flex;justify-content:space-between;gap:40px;
+    padding:30px 42px 8px;
+  }
+  .sign-block{flex:1;}
+  .sign-line{border-top:1.5px solid var(--ink);margin-top:44px;padding-top:8px;font-size:12px;color:var(--muted);}
+
+  .foot{
+    text-align:center;
+    padding:12px 42px 16px;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .foot .thanks{color:var(--aqua);font-weight:700;font-size:13px;margin-bottom:4px;}
+
+  @media print{
+    html{zoom:0.87;}
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;border-radius:0;width:820px;max-width:820px;margin:0 auto;}
+    @page{margin:8mm;}
+  }
+  @media (max-width:640px){
+    .head{flex-direction:column;padding:26px 22px;}
+    .doc-badge{text-align:left;}
+    .doc-badge .accent{margin-left:0;}
+    .meta,.section,.body,.signoff,.foot{padding-left:22px;padding-right:22px;}
+    .meta{grid-template-columns:1fr;}
+    .incl{grid-template-columns:1fr;}
+    .signoff{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- HEADER -->
+  <div class="head">
+    <div>
+      <img class="brand-logo" src="assets/bb-logo.png" alt="Business Booster">
+      <div class="brand-tag">Growth, Web &amp; Systems</div>
+      <div class="brand-meta">
+        businessboosterlk@gmail.com<br>
+        Colombo, Sri Lanka
+      </div>
+    </div>
+    <div class="doc-badge">
+      <h1>QUOTATION</h1>
+      <div class="accent"></div>
+      <div class="row">Quote No: <b>BB-2026-WESPL-01</b></div>
+      <div class="row">Date: <b>09 July 2026</b></div>
+      <div class="row">Valid until: <b>23 July 2026</b></div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta">
+    <div>
+      <h4>Quotation For</h4>
+      <div class="client-name">Waterman Environmental Systems (Pvt) Ltd</div>
+      <p>
+        No. 75, Jaya Road, Udahamulla,<br>
+        Nugegoda, Sri Lanka<br>
+        Tel: +94 114 878 838<br>
+        waterman@eureka.lk
+      </p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <div class="client-name">Corporate Website Design &amp; Build</div>
+      <p>
+        A world-class, custom 5-page corporate website for watermanenv.lk (Home, About, Services, Projects and Contact). Mobile ready and built to reflect 35 years of engineering leadership in water treatment.
+      </p>
+    </div>
+  </div>
+
+  <!-- LINE ITEMS -->
+  <div class="body">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:56%">Description</th>
+          <th class="num">Qty</th>
+          <th class="num">Rate (LKR)</th>
+          <th class="num">Amount (LKR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="item-title">Custom 5-Page Website Design &amp; Development</div>
+            <div class="item-desc">Fully custom, hand-built 5-page website: Home, About, Services, Projects and Contact. Full-bleed hero, company story, laboratory and installation showcase, and animated statistics. Not a template.</div>
+          </td>
+          <td class="num">1</td>
+          <td class="num">250,000</td>
+          <td class="num">250,000</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="item-title">Domain Setup &amp; Live Deployment</div>
+            <div class="item-desc">Connecting the site to watermanenv.lk, secure hosting configuration, and taking it live.</div>
+          </td>
+          <td class="num">1</td>
+          <td class="num"><span class="was">15,000</span></td>
+          <td class="num"><span class="free">FREE</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="item-title">WhatsApp &amp; Enquiry Integration</div>
+            <div class="item-desc">One-tap WhatsApp enquiry button and click-to-call, so every visitor becomes a reachable lead.</div>
+          </td>
+          <td class="num">1</td>
+          <td class="num"><span class="was">15,000</span></td>
+          <td class="num"><span class="free">FREE</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <div class="incl-col">
+        <h3>What's Included</h3>
+        <ul class="incl">
+          <li>5 custom pages, no templates</li>
+          <li>Mobile, tablet and desktop ready</li>
+          <li>Fast loading and secure hosting</li>
+          <li>Real company photography styling</li>
+          <li>WhatsApp and call lead buttons</li>
+          <li>Search-engine friendly structure</li>
+          <li>Your own domain, watermanenv.lk</li>
+          <li>Ready for future pages and growth</li>
+        </ul>
+      </div>
+      <div class="totals">
+        <table>
+          <tr>
+            <td class="lbl">Total value</td>
+            <td class="val">LKR 280,000</td>
+          </tr>
+          <tr>
+            <td class="lbl">Bonus items, free</td>
+            <td class="val" style="color:var(--green)">- LKR 30,000</td>
+          </tr>
+          <tr class="grand">
+            <td>Total</td>
+            <td class="val">LKR 250,000</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMS -->
+  <div class="section">
+    <h3>Payment Terms</h3>
+    <p class="terms">
+      <b>50% advance</b> (LKR 125,000) to begin, <b>50% balance</b> (LKR 125,000) on go-live.<br>
+      <b>Timeline:</b> site ready to launch within 5 to 7 working days of confirmation.<br>
+      <b>Validity:</b> this quotation is valid for 14 days from the date above.<br>
+      <b>After launch:</b> to keep the site running well and grow your visibility on Google, ongoing website maintenance and SEO will be needed once the site is live. Quoted separately.
+    </p>
+  </div>
+
+  <div class="foot">
+    <div class="thanks">Thank you for the opportunity.</div>
+    Business Booster · businessboosterlk@gmail.com
+  </div>
+
+</div>
+</body>
+</html>

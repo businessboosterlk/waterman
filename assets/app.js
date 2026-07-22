@@ -98,7 +98,7 @@ function buildFinder(){
   if(fNeed===null)return;
   const n=NEEDS[fNeed];const sec=SECTORS.find(s=>s.k===fSector);
   const secLine=sec?` for your ${sec.k.toLowerCase()}, ${sec.note}.`:'.';
-  $('finderR').innerHTML=`<div class="orb"></div>
+  $('finderR').innerHTML=`
     <div class="fr-head">
       <span class="eyebrow">Recommended solution</span>
       <h3>${n.sys}</h3>
